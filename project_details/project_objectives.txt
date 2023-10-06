@@ -1,0 +1,4 @@
+
+
+A project to learn how to implement front-end authentication using React,
+and also includes a crud.
