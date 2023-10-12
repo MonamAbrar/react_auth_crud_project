@@ -1,5 +1,8 @@
 
 
+0.0.3
+  - Minor improvements to flow
+
 0.0.2
   - token flow implemented (accessing home page)
   - basic login and register implemented
