@@ -32,18 +32,17 @@ const Navigate = () => {
       } catch (error) {
         console.error('Error:', error);
       }
-    }
-
-
-    
-
-
+   }
+  
   };
 
   return (
-    <div>
-      {/* <button onClick={handleNavigate}>Home Page</button> */}
-      <button onClick={handleNavigate}>Home Page</button>
+    <div className='Container'>
+      <div>
+        <button onClick={handleNavigate}>
+          Home Page
+        </button>
+      </div>
     </div>
   );
 

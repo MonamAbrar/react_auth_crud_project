@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+
+import { Form, Button } from 'react-bootstrap'
 import'./Register.css';
 
-const Register = () => {
+const Register = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,12 +29,32 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Register</h2>
-      <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="text" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleRegister}>Register</button>
+      <Form>
+      <Form.Group controlId="fromBasicName">
+          
+          <Form.Control type="Name" placeholder="Name" onchange={(e) => setName(e.target.value)} />
+        </Form.Group>
+        
+        <Form.Group controlId="fromBasicEmail">
+          
+          <Form.Control type="email" placeholder="email" onchange={(e) => setEmail(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPassword">
+          
+          <Form.Control type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+        </Form.Group>
+
+        <Button variant="primary" onClick={handleRegister}>
+          Register
+        </Button>
+        <Button variant="secondary" onClick={props.onCancel}>
+          Cancel
+        </Button>
+      </Form>
+      
     </div>
   );
 };
