@@ -1,5 +1,8 @@
 
 
+0.0.5
+  - Basic login / register / homepage flow set up (without good UX);
+
 0.0.4
   - Switching between login/register components working
   - New login/register components

@@ -1,8 +1,6 @@
 import React, { useState} from 'react';
 
-import { Form, Button } from 'react-bootstrap';
-
-
+import { Form, Button, Alert } from 'react-bootstrap';
 
 const Login = (props) => {
 
@@ -10,9 +8,20 @@ const Login = (props) => {
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [validated, setValidated] = useState(false);
+  const [error] = useState('');
 
 
-  const { handleLogin } = async () => {
+  const handleLogin = async () => {
+   const form = document.getElementById('loginForm');
+   if (form.checkValidity() === false) {
+    setValidated(true);
+    return;
+   }
+
+   setValidated(false);
+
+  
     try {
       const response = await fetch('http://localhost:5678/users/login', {
         method: 'POST',
@@ -24,12 +33,8 @@ const Login = (props) => {
 
       if (response.status === 200) {
         const responseData = await response.json();
-        
-        if (responseData.token) {
-          localStorage.setItem('token', responseData.token);
-        }
-
-      } else {
+        localStorage.setItem('token', responseData.token);
+        props.onSuccess();
 
       }
 
@@ -42,18 +47,40 @@ const Login = (props) => {
 return (
   <div className='container'>
     <h2>Login</h2>
-    <Form>
+    {error && <Alert variant="danger">{error}</Alert>}
+    <Form id="loginForm" noValidate validated={validated}>
+      
       <Form.Group controlId="formBasicEmail">
         
-        <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}/>
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
+        <Form.Control 
+          type="email" 
+          placeholder="Enter email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        
+        <Form.Control.Feedback type="invalid">
+          Please provide a valid email.
+        </Form.Control.Feedback>
+      
       </Form.Group>
+        
 
       <Form.Group controlId="formBasicPassword">
         
-        <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+        <Form.Control 
+          type="password" 
+          placeholder="Password" 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        
+        <Form.Control.Feedback type='invalid'>
+          Please provide a password.
+        </Form.Control.Feedback>
+      
       </Form.Group>
 
       <Form.Group controlId="formBasicCheckbox">
@@ -61,7 +88,7 @@ return (
       </Form.Group>
 
       <Button variant="primary" onClick={ handleLogin }>
-        Sing In
+        Sign In
       </Button>
       
       <p className="text-center">Not a member?
